@@ -1,0 +1,67 @@
+@charset "UTF-8";
+$lte7:true !default;//ie6,7
+
+// inline-block
+@mixin inline-block{
+  display: inline-block;
+  @if $lte7 {
+    *display:inline;
+    zoom:1;
+  }
+}
+
+// e.g.
+// .selector {
+//   @include prefix((
+//     column-count: 3,
+//     column-gap: 1.5em,
+//     column-rule: 2px solid hotpink
+//   ), webkit moz);
+// }
+@mixin prefix($declarations, $prefixes: ()) {
+  @each $property, $value in $declarations {
+    @each $prefix in $prefixes {
+      #{'-' + $prefix + '-' + $property}: $value;
+    }
+
+    // Output standard non-prefixed declaration
+    #{$property}: $value;
+  }
+}
+
+@mixin borderArrow($width,$border-width,$color,$border-radius){
+  @include inline-block;
+  @include rem-calc(width,$width);
+  @include rem-calc(height,$width);
+  @include rem-calc(border-right-width,$border-width);
+  @include rem-calc(border-bottom-width,$border-width);
+  @include rem-calc(border-radius,$border-radius);
+  content:"";
+  vertical-align:middle;
+  font-size:0;
+  border-right:solid $color;
+  border-bottom:solid $color;
+  -webkit-backface-visibility:hidden;
+}
+
+//ellipsis
+@mixin ellipsis($line){
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @if ($line == 1) {
+        white-space: nowrap;
+    }@else{
+        display: -webkit-box;
+        -webkit-line-clamp: $line;
+        -webkit-box-orient: vertical;
+    }
+}
+
+// gradient
+@mixin gra($begin,$end){
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($begin), to($end));
+  background-image: -webkit-linear-gradient(top, $begin, $end);
+  background-image:    -moz-linear-gradient(top, $begin, $end);
+  background-image:      -o-linear-gradient(top, $begin, $end);
+  background-image:         linear-gradient(top, $begin, $end);
+}
