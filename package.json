@@ -15,7 +15,7 @@
     "node":  ">=6.9.1"
   },
   "author": "Amanda",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/xhxxac16/amandadev/issues"
   },
